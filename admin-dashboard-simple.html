@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Admin Dashboard - SOET University</title>
+    <link rel="icon" href="IMG/vikram-university-Photoroom.png" type="image/x-icon">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #211D70, #841C2C);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        .welcome {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .welcome h1 {
+            color: #211D70;
+            margin-bottom: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: bold;
+            color: #211D70;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .action-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .action-card h3 {
+            color: #841C2C;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, #211D70, #841C2C);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 5px;
+            transition: transform 0.3s;
+            font-weight: bold;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .system-status {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-top: 30px;
+        }
+
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .status-item:last-child {
+            border-bottom: none;
+        }
+
+        .status-good {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .status-warning {
+            color: #ffc107;
+            font-weight: bold;
+        }
+
+        .quick-links {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-top: 30px;
+        }
+
+        .quick-links h3 {
+            color: #211D70;
+            margin-bottom: 15px;
+        }
+
+        .link-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .quick-link {
+            display: block;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s;
+            border-left: 4px solid #841C2C;
+        }
+
+        .quick-link:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .actions-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo-section">
+            <img src="IMG/vikram-university-Photoroom.png" alt="University Logo" class="logo">
+            <div>
+                <h2>SOET Admin Dashboard</h2>
+                <p>Vikram University, Ujjain</p>
+            </div>
+        </div>
+        <div class="user-section">
+            <span>Welcome, <strong id="adminName">Admin</strong></span>
+            <button class="logout-btn" onclick="simpleLogout()">
+                🚪 Logout
+            </button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="welcome">
+            <h1>🎯 Dashboard Overview</h1>
+            <p>Welcome to the SOET University Administration Panel</p>
+            <p><strong>Last Login:</strong> <span id="lastLogin">Loading...</span></p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">👥</div>
+                <div class="stat-number">156</div>
+                <div class="stat-label">Total Staff</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🎓</div>
+                <div class="stat-number">2,340</div>
+                <div class="stat-label">Alumni Records</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📅</div>
+                <div class="stat-number">12</div>
+                <div class="stat-label">Upcoming Events</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📢</div>
+                <div class="stat-number">8</div>
+                <div class="stat-label">Active Announcements</div>
+            </div>
+        </div>
+
+        <div class="actions-grid">
+            <div class="action-card">
+                <h3>👥 Staff Management</h3>
+                <p>Manage faculty and staff information</p>
+                <button class="action-btn" onclick="manageStaff()">View Staff</button>
+                <button class="action-btn" onclick="addStaff()">Add New Staff</button>
+            </div>
+
+            <div class="action-card">
+                <h3>🎓 Alumni Management</h3>
+                <p>Track and manage alumni records</p>
+                <button class="action-btn" onclick="manageAlumni()">View Alumni</button>
+                <button class="action-btn" onclick="addAlumni()">Add Alumni</button>
+            </div>
+
+            <div class="action-card">
+                <h3>📅 Events Management</h3>
+                <p>Create and manage university events</p>
+                <button class="action-btn" onclick="manageEvents()">View Events</button>
+                <button class="action-btn" onclick="addEvent()">Create Event</button>
+            </div>
+
+            <div class="action-card">
+                <h3>📢 Announcements</h3>
+                <p>Publish news and announcements</p>
+                <button class="action-btn" onclick="manageAnnouncements()">View All</button>
+                <button class="action-btn" onclick="addAnnouncement()">New Announcement</button>
+            </div>
+        </div>
+
+        <div class="system-status">
+            <h3>🔧 System Status</h3>
+            <div class="status-item">
+                <span>🌐 Website Status</span>
+                <span class="status-good">✅ Online</span>
+            </div>
+            <div class="status-item">
+                <span>🗄️ Database Connection</span>
+                <span class="status-warning">⚠️ Limited (No MongoDB)</span>
+            </div>
+            <div class="status-item">
+                <span>📁 File Storage</span>
+                <span class="status-good">✅ Available</span>
+            </div>
+            <div class="status-item">
+                <span>📧 Email Service</span>
+                <span class="status-warning">⚠️ Not Configured</span>
+            </div>
+        </div>
+
+        <div class="quick-links">
+            <h3>🔗 Quick Links</h3>
+            <div class="link-grid">
+                <a href="index.html" class="quick-link">🏠 Main Website</a>
+                <a href="about.html" class="quick-link">ℹ️ About Page</a>
+                <a href="academics.html" class="quick-link">🎓 Academics</a>
+                <a href="activities.html" class="quick-link">🎯 Activities</a>
+                <a href="contact.html" class="quick-link">📞 Contact</a>
+                <a href="announcements.html" class="quick-link">📢 Announcements</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        console.log('Simple Admin Dashboard Loaded');
+
+        // Check if user is logged in
+        function checkAuth() {
+            const session = localStorage.getItem('soetAdminSession') || sessionStorage.getItem('soetAdminSession');
+            
+            if (!session) {
+                console.log('No admin session found, redirecting to login');
+                alert('⚠️ Please login first');
+                window.location.href = 'admin-login-simple.html';
+                return false;
+            }
+            
+            try {
+                const sessionData = JSON.parse(session);
+                console.log('Admin session found:', sessionData);
+                
+                // Update display
+                document.getElementById('adminName').textContent = sessionData.email || 'Admin';
+                document.getElementById('lastLogin').textContent = new Date(sessionData.loginTime).toLocaleString();
+                
+                return true;
+            } catch (e) {
+                console.error('Invalid session data:', e);
+                localStorage.removeItem('soetAdminSession');
+                sessionStorage.removeItem('soetAdminSession');
+                window.location.href = 'admin-login-simple.html';
+                return false;
+            }
+        }
+
+        // Simple logout function
+        function simpleLogout() {
+            console.log('Logout clicked');
+            
+            if (confirm('🤔 Are you sure you want to logout?')) {
+                console.log('User confirmed logout');
+                
+                // Clear all sessions
+                localStorage.removeItem('soetAdminSession');
+                sessionStorage.removeItem('soetAdminSession');
+                localStorage.removeItem('adminToken');
+                sessionStorage.removeItem('adminToken');
+                
+                console.log('Session cleared');
+                alert('✅ Logged out successfully!');
+                
+                // Redirect to login
+                window.location.href = 'admin-login-simple.html';
+            }
+        }
+
+        // Management functions
+        function manageStaff() {
+            alert('👥 Staff Management\n\nThis would open the staff management interface.\nFeatures:\n• View all staff\n• Add/Edit/Delete staff\n• Upload photos\n• Manage departments');
+        }
+
+        function addStaff() {
+            alert('➕ Add New Staff\n\nThis would open a form to add new staff members with:\n• Personal information\n• Department assignment\n• Contact details\n• Photo upload');
+        }
+
+        function manageAlumni() {
+            alert('🎓 Alumni Management\n\nThis would show the alumni management system:\n• View alumni database\n• Track career progress\n• Contact management\n• Success stories');
+        }
+
+        function addAlumni() {
+            alert('➕ Add Alumni\n\nThis would open a form to add new alumni records:\n• Graduation details\n• Current position\n• Contact information\n• Achievements');
+        }
+
+        function manageEvents() {
+            alert('📅 Events Management\n\nThis would show all university events:\n• Upcoming events\n• Past events\n• Event categories\n• Attendance tracking');
+        }
+
+        function addEvent() {
+            alert('➕ Create New Event\n\nThis would open an event creation form:\n• Event details\n• Date and time\n• Venue information\n• Registration settings');
+        }
+
+        function manageAnnouncements() {
+            alert('📢 Announcements Management\n\nThis would show all announcements:\n• Published announcements\n• Draft announcements\n• Scheduled posts\n• Analytics');
+        }
+
+        function addAnnouncement() {
+            alert('➕ New Announcement\n\nThis would open the announcement editor:\n• Rich text editor\n• Image uploads\n• Publishing options\n• Target audience');
+        }
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Dashboard initializing...');
+            
+            if (checkAuth()) {
+                console.log('Dashboard ready!');
+                
+                // Add some dynamic effects
+                const statCards = document.querySelectorAll('.stat-card');
+                statCards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(20px)';
+                        card.style.transition = 'all 0.5s ease';
+                        
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                        }, 100);
+                    }, index * 200);
+                });
+            }
+        });
+
+        // Global logout function for compatibility
+        window.performLogout = simpleLogout;
+        window.logout = simpleLogout;
+
+        console.log('Simple admin dashboard ready!');
+    </script>
+</body>
+</html>

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - SOET University</title>
+    <link rel="icon" href="IMG/vikram-university-Photoroom.png" type="image/x-icon">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #211D70 0%, #841C2C 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .logo {
+            margin-bottom: 20px;
+        }
+
+        .logo img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid #FFE8BF;
+        }
+
+        h1 {
+            color: #211D70;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        .subtitle {
+            color: #841C2C;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: #211D70;
+        }
+
+        .login-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #211D70, #841C2C);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .login-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .back-link {
+            margin-top: 20px;
+            display: block;
+            color: #666;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            color: #211D70;
+        }
+
+        .credentials-info {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .credentials-info h3 {
+            margin-bottom: 10px;
+            color: #841C2C;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <img src="IMG/vikram-university-Photoroom.png" alt="Vikram University Logo">
+        </div>
+        <h1>SOET Admin Login</h1>
+        <p class="subtitle">Vikram University, Ujjain</p>
+
+        <div class="credentials-info">
+            <h3>🔑 Default Login Credentials</h3>
+            <p><strong>Username:</strong> admin@soetuniversity.com</p>
+            <p><strong>Password:</strong> admin123</p>
+        </div>
+
+        <form id="simpleLoginForm">
+            <div class="form-group">
+                <label for="email">Email/Username:</label>
+                <input type="text" id="email" value="admin@soetuniversity.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="pass">Password:</label>
+                <input type="password" id="pass" value="admin123" required>
+            </div>
+
+            <button type="submit" class="login-btn" id="submitBtn">
+                🔓 Login to Admin Panel
+            </button>
+
+            <div id="msg" class="message"></div>
+        </form>
+
+        <a href="index.html" class="back-link">← Back to Main Website</a>
+    </div>
+
+    <script>
+        // Simple, bulletproof login system
+        console.log('Admin Login System Loaded');
+
+        // Default credentials
+        const ADMIN_CREDENTIALS = {
+            'admin@soetuniversity.com': 'admin123',
+            'admin': 'admin123',
+            'soet@admin': 'password123'
+        };
+
+        // Simple message display
+        function showMsg(text, type) {
+            const msgEl = document.getElementById('msg');
+            msgEl.textContent = text;
+            msgEl.className = 'message ' + type;
+            msgEl.style.display = 'block';
+            
+            console.log(`Login Message (${type}): ${text}`);
+        }
+
+        // Simple login function
+        function doLogin(email, password) {
+            console.log('Login attempt:', email);
+            
+            // Check credentials
+            if (ADMIN_CREDENTIALS[email] && ADMIN_CREDENTIALS[email] === password) {
+                console.log('Login successful!');
+                
+                // Store session
+                const sessionData = {
+                    email: email,
+                    loginTime: new Date().toISOString(),
+                    isAdmin: true
+                };
+                
+                localStorage.setItem('soetAdminSession', JSON.stringify(sessionData));
+                sessionStorage.setItem('soetAdminSession', JSON.stringify(sessionData));
+                
+                showMsg('✅ Login Successful! Redirecting...', 'success');
+                
+                // Redirect after 2 seconds
+                setTimeout(function() {
+                    console.log('Redirecting to admin dashboard...');
+                    window.location.href = 'admin-dashboard.html';
+                }, 2000);
+                
+                return true;
+            } else {
+                console.log('Login failed: Invalid credentials');
+                showMsg('❌ Invalid credentials. Please try again.', 'error');
+                return false;
+            }
+        }
+
+        // Form submission handler
+        document.getElementById('simpleLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            console.log('Form submitted');
+            
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('pass').value;
+            
+            if (!email || !password) {
+                showMsg('⚠️ Please enter both email and password', 'error');
+                return;
+            }
+            
+            // Disable button during login
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.textContent = '🔄 Logging in...';
+            
+            // Simulate loading and then login
+            setTimeout(function() {
+                const success = doLogin(email, password);
+                
+                // Re-enable button if login failed
+                if (!success) {
+                    btn.disabled = false;
+                    btn.textContent = '🔓 Login to Admin Panel';
+                }
+            }, 1000);
+        });
+
+        // Auto-fill credentials on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Page loaded, auto-filling credentials');
+            document.getElementById('email').value = 'admin@soetuniversity.com';
+            document.getElementById('pass').value = 'admin123';
+        });
+
+        // Test function - can be called from browser console
+        window.testLogin = function() {
+            console.log('Testing login...');
+            doLogin('admin@soetuniversity.com', 'admin123');
+        };
+
+        console.log('Available test function: testLogin()');
+        console.log('Admin login system ready!');
+    </script>
+</body>
+</html>

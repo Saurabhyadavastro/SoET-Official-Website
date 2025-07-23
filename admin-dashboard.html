@@ -1,0 +1,1753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - SOET University</title>
+    <link rel="stylesheet" href="admin-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="IMG/vikram-university-Photoroom.png" type="image/x-icon">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Admin Header -->
+        <header class="admin-header">
+            <div class="admin-logo">
+                <img src="IMG/vikram-university-Photoroom.png" alt="Vikram University Logo">
+                <h2>Vikram University Admin Panel</h2>
+            </div>
+            <div class="admin-user">
+                <span>Welcome, <span id="adminUsername">Admin</span></span>
+                <button id="logoutBtn" class="logout-btn" onclick="performLogout()" 
+                        onmousedown="this.style.background='#a0142c'"
+                        onmouseup="this.style.background='#841C2C'">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Dashboard Stats -->
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="staffCount">25</h3>
+                        <p>Staff Members</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="alumniCount">150</h3>
+                        <p>Alumni Records</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="eventCount">8</h3>
+                        <p>Active Events</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="announcementCount">12</h3>
+                        <p>Announcements</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Overview Section -->
+            <div class="admin-section dashboard-overview">
+                <div class="section-header">
+                    <h1><i class="fas fa-tachometer-alt"></i> Dashboard Overview</h1>
+                    <p>Welcome to SOET University Admin Panel</p>
+                </div>
+                
+                <!-- Dashboard Grid -->
+                <div class="dashboard-grid">
+                    <!-- Quick Actions Panel -->
+                    <div class="dashboard-widget quick-actions-widget">
+                        <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
+                        <div class="quick-actions-grid">
+                            <button class="quick-action-btn" onclick="showSection('staff')">
+                                <i class="fas fa-users"></i>
+                                <span>Manage Staff</span>
+                            </button>
+                            <button class="quick-action-btn" onclick="showSection('alumni')">
+                                <i class="fas fa-user-graduate"></i>
+                                <span>Alumni</span>
+                            </button>
+                            <button class="quick-action-btn" onclick="showSection('events')">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>Events</span>
+                            </button>
+                            <button class="quick-action-btn" onclick="showSection('announcements')">
+                                <i class="fas fa-bullhorn"></i>
+                                <span>Announcements</span>
+                            </button>
+                            <button class="quick-action-btn" onclick="showSection('media')">
+                                <i class="fas fa-images"></i>
+                                <span>Media Library</span>
+                            </button>
+                            <button class="quick-action-btn" onclick="showAddStaffModal()">
+                                <i class="fas fa-plus"></i>
+                                <span>Add Staff</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activities Panel -->
+                    <div class="dashboard-widget activities-widget">
+                        <h3><i class="fas fa-clock"></i> Recent Activities</h3>
+                        <div class="activities-list" id="recentActivities">
+                            <div class="activity-item">
+                                <div class="activity-icon">
+                                    <i class="fas fa-user-plus"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <h4>New Staff Added</h4>
+                                    <p>Dr. Priya Sharma joined Electronics Department</p>
+                                    <span class="activity-time">2 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon">
+                                    <i class="fas fa-calendar-plus"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <h4>Event Created</h4>
+                                    <p>Technical Workshop on AI scheduled</p>
+                                    <span class="activity-time">5 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon">
+                                    <i class="fas fa-bullhorn"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <h4>Announcement Posted</h4>
+                                    <p>New semester registration dates announced</p>
+                                    <span class="activity-time">1 day ago</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="view-all-btn" onclick="showAllActivities()">
+                            <i class="fas fa-list"></i> View All Activities
+                        </button>
+                    </div>
+
+                    <!-- System Status Panel -->
+                    <div class="dashboard-widget system-status-widget">
+                        <h3><i class="fas fa-server"></i> System Status</h3>
+                        <div class="status-grid">
+                            <div class="status-item">
+                                <div class="status-indicator status-good"></div>
+                                <div class="status-info">
+                                    <h4>Website Status</h4>
+                                    <p>All systems operational</p>
+                                </div>
+                            </div>
+                            <div class="status-item">
+                                <div class="status-indicator status-good"></div>
+                                <div class="status-info">
+                                    <h4>Database</h4>
+                                    <p>Connected & healthy</p>
+                                </div>
+                            </div>
+                            <div class="status-item">
+                                <div class="status-indicator status-warning"></div>
+                                <div class="status-info">
+                                    <h4>Storage</h4>
+                                    <p>75% capacity used</p>
+                                </div>
+                            </div>
+                            <div class="status-item">
+                                <div class="status-indicator status-good"></div>
+                                <div class="status-info">
+                                    <h4>Email Service</h4>
+                                    <p>Working normally</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Stats Panel -->
+                    <div class="dashboard-widget stats-widget">
+                        <h3><i class="fas fa-chart-line"></i> Quick Statistics</h3>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value">2,245</div>
+                                <div class="stat-label">Total Students</div>
+                                <div class="stat-change positive">
+                                    <i class="fas fa-arrow-up"></i> +5.2%
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">32</div>
+                                <div class="stat-label">Faculty Members</div>
+                                <div class="stat-change positive">
+                                    <i class="fas fa-arrow-up"></i> +2
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">158</div>
+                                <div class="stat-label">Alumni Network</div>
+                                <div class="stat-change positive">
+                                    <i class="fas fa-arrow-up"></i> +12
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">24</div>
+                                <div class="stat-label">Active Events</div>
+                                <div class="stat-change neutral">
+                                    <i class="fas fa-minus"></i> 0%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Calendar Widget -->
+                    <div class="dashboard-widget calendar-widget">
+                        <h3><i class="fas fa-calendar"></i> Upcoming Events</h3>
+                        <div class="calendar-events">
+                            <div class="calendar-event">
+                                <div class="event-date">
+                                    <span class="day">25</span>
+                                    <span class="month">JUL</span>
+                                </div>
+                                <div class="event-info">
+                                    <h4>Technical Workshop</h4>
+                                    <p>AI & Machine Learning</p>
+                                    <span class="event-time">10:00 AM - 4:00 PM</span>
+                                </div>
+                            </div>
+                            <div class="calendar-event">
+                                <div class="event-date">
+                                    <span class="day">28</span>
+                                    <span class="month">JUL</span>
+                                </div>
+                                <div class="event-info">
+                                    <h4>Alumni Meet</h4>
+                                    <p>CSE Department</p>
+                                    <span class="event-time">2:00 PM - 6:00 PM</span>
+                                </div>
+                            </div>
+                            <div class="calendar-event">
+                                <div class="event-date">
+                                    <span class="day">02</span>
+                                    <span class="month">AUG</span>
+                                </div>
+                                <div class="event-info">
+                                    <h4>New Semester</h4>
+                                    <p>Registration begins</p>
+                                    <span class="event-time">9:00 AM onwards</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="view-all-btn" onclick="showSection('events')">
+                            <i class="fas fa-calendar-alt"></i> View All Events
+                        </button>
+                    </div>
+
+                    <!-- Website Analytics Widget -->
+                    <div class="dashboard-widget analytics-widget">
+                        <h3><i class="fas fa-analytics"></i> Website Analytics</h3>
+                        <div class="analytics-grid">
+                            <div class="analytics-item">
+                                <div class="analytics-icon">
+                                    <i class="fas fa-eye"></i>
+                                </div>
+                                <div class="analytics-data">
+                                    <h4>15,847</h4>
+                                    <p>Page Views</p>
+                                    <span class="analytics-period">This month</span>
+                                </div>
+                            </div>
+                            <div class="analytics-item">
+                                <div class="analytics-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="analytics-data">
+                                    <h4>3,542</h4>
+                                    <p>Unique Visitors</p>
+                                    <span class="analytics-period">This month</span>
+                                </div>
+                            </div>
+                            <div class="analytics-item">
+                                <div class="analytics-icon">
+                                    <i class="fas fa-download"></i>
+                                </div>
+                                <div class="analytics-data">
+                                    <h4>892</h4>
+                                    <p>Downloads</p>
+                                    <span class="analytics-period">This month</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="analytics-chart">
+                            <p>📈 Traffic increased by 12% compared to last month</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Staff Management Section -->
+            <div id="staff-section" class="admin-section" style="display: none;">
+                <div class="section-header">
+                    <h1><i class="fas fa-users"></i> Staff Management</h1>
+                    <button class="btn-primary" onclick="showAddStaffModal()">
+                        <i class="fas fa-plus"></i>
+                        Add New Staff
+                    </button>
+                </div>
+                
+                <div class="content-filters">
+                    <div class="form-group">
+                        <label>Department:</label>
+                        <select id="staffDeptFilter" onchange="filterStaff()">
+                            <option value="all">All Departments</option>
+                            <option value="director">Director Office</option>
+                            <option value="ece">Electronics & Communication</option>
+                            <option value="cs">Computer Science</option>
+                            <option value="me">Mechanical Engineering</option>
+                            <option value="ee">Electrical Engineering</option>
+                            <option value="ce">Civil Engineering</option>
+                            <option value="admin">Administration</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Search:</label>
+                        <input type="text" id="staffSearch" placeholder="Search staff members..." oninput="filterStaff()">
+                    </div>
+                </div>
+
+                <div id="staffList" class="content-list">
+                    <!-- Staff members will be loaded here dynamically -->
+                    <div class="content-card">
+                        <h4>Dr. Rajesh Kumar</h4>
+                        <p><strong>Position:</strong> Professor & Head</p>
+                        <p><strong>Department:</strong> Computer Science</p>
+                        <p><strong>Email:</strong> rajesh.kumar@soet.ac.in</p>
+                        <div class="card-actions">
+                            <button class="btn-secondary" onclick="editStaff(1)">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="btn-danger" onclick="deleteStaff(1)">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alumni Management Section -->
+            <div id="alumni-section" class="admin-section" style="display: none;">
+                <div class="section-header">
+                    <h1><i class="fas fa-user-graduate"></i> Alumni Management</h1>
+                    <div class="header-actions">
+                        <button class="btn-secondary" onclick="exportAlumniData()">
+                            <i class="fas fa-download"></i> Export Data
+                        </button>
+                        <button class="btn-primary" onclick="showAddAlumniModal()">
+                            <i class="fas fa-plus"></i>
+                            Add New Alumni
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Alumni Statistics -->
+                <div class="management-stats">
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-data">
+                            <h3 id="totalAlumniCount">158</h3>
+                            <p>Total Alumni</p>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="stat-data">
+                            <h3 id="recentGraduatesCount">32</h3>
+                            <p>Recent Graduates (2024)</p>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="stat-data">
+                            <h3 id="employedAlumniCount">142</h3>
+                            <p>Currently Employed</p>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="stat-data">
+                            <h3 id="achieversCount">28</h3>
+                            <p>Notable Achievers</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-filters">
+                    <div class="form-group">
+                        <label>Graduation Year:</label>
+                        <select id="alumniYearFilter" onchange="filterAlumni()">
+                            <option value="all">All Years</option>
+                            <option value="2024">2024</option>
+                            <option value="2023">2023</option>
+                            <option value="2022">2022</option>
+                            <option value="2021">2021</option>
+                            <option value="2020">2020</option>
+                            <option value="2019">2019</option>
+                            <option value="2018">2018</option>
+                            <option value="2017">2017</option>
+                            <option value="2016">2016</option>
+                            <option value="2015">2015</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Department:</label>
+                        <select id="alumniDeptFilter" onchange="filterAlumni()">
+                            <option value="all">All Departments</option>
+                            <option value="cs">Computer Science</option>
+                            <option value="ece">Electronics & Communication</option>
+                            <option value="me">Mechanical Engineering</option>
+                            <option value="ee">Electrical Engineering</option>
+                            <option value="ce">Civil Engineering</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Employment Status:</label>
+                        <select id="alumniEmploymentFilter" onchange="filterAlumni()">
+                            <option value="all">All Status</option>
+                            <option value="employed">Employed</option>
+                            <option value="entrepreneur">Entrepreneur</option>
+                            <option value="higher-studies">Higher Studies</option>
+                            <option value="job-seeking">Job Seeking</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Search:</label>
+                        <input type="text" id="alumniSearch" placeholder="Search alumni by name, company, position..." oninput="filterAlumni()">
+                    </div>
+                </div>
+
+                <div id="alumniList" class="content-list">
+                    <!-- Alumni records will be loaded here dynamically -->
+                    <div class="content-card alumni-card">
+                        <div class="alumni-header">
+                            <div class="alumni-avatar">
+                                <i class="fas fa-user-graduate"></i>
+                            </div>
+                            <div class="alumni-basic-info">
+                                <h4>Amit Sharma</h4>
+                                <p class="alumni-batch">Batch of 2023 • Computer Science</p>
+                            </div>
+                            <div class="alumni-status employed">
+                                <span>Employed</span>
+                            </div>
+                        </div>
+                        <div class="alumni-details">
+                            <div class="alumni-current">
+                                <p><strong>Current Position:</strong> Software Engineer</p>
+                                <p><strong>Company:</strong> Tata Consultancy Services</p>
+                                <p><strong>Location:</strong> Bangalore, Karnataka</p>
+                            </div>
+                            <div class="alumni-contact">
+                                <p><i class="fas fa-envelope"></i> amit.sharma@email.com</p>
+                                <p><i class="fas fa-phone"></i> +91 9876543210</p>
+                                <p><i class="fab fa-linkedin"></i> linkedin.com/in/amitsharma</p>
+                            </div>
+                        </div>
+                        <div class="alumni-achievements">
+                            <p><strong>Achievements:</strong> Winner of Best Innovation Award 2024, Published 3 research papers</p>
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn-info" onclick="viewAlumniProfile(1)">
+                                <i class="fas fa-eye"></i> View Profile
+                            </button>
+                            <button class="btn-secondary" onclick="editAlumni(1)">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="btn-success" onclick="contactAlumni(1)">
+                                <i class="fas fa-envelope"></i> Contact
+                            </button>
+                            <button class="btn-danger" onclick="deleteAlumni(1)">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="content-card alumni-card">
+                        <div class="alumni-header">
+                            <div class="alumni-avatar">
+                                <i class="fas fa-user-graduate"></i>
+                            </div>
+                            <div class="alumni-basic-info">
+                                <h4>Priya Patel</h4>
+                                <p class="alumni-batch">Batch of 2022 • Electronics & Communication</p>
+                            </div>
+                            <div class="alumni-status entrepreneur">
+                                <span>Entrepreneur</span>
+                            </div>
+                        </div>
+                        <div class="alumni-details">
+                            <div class="alumni-current">
+                                <p><strong>Current Position:</strong> Founder & CEO</p>
+                                <p><strong>Company:</strong> TechStart Solutions</p>
+                                <p><strong>Location:</strong> Mumbai, Maharashtra</p>
+                            </div>
+                            <div class="alumni-contact">
+                                <p><i class="fas fa-envelope"></i> priya.patel@techstart.com</p>
+                                <p><i class="fas fa-phone"></i> +91 9876543211</p>
+                                <p><i class="fab fa-linkedin"></i> linkedin.com/in/priyapatel</p>
+                            </div>
+                        </div>
+                        <div class="alumni-achievements">
+                            <p><strong>Achievements:</strong> Founded successful startup valued at $2M, Featured in Forbes 30 Under 30</p>
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn-info" onclick="viewAlumniProfile(2)">
+                                <i class="fas fa-eye"></i> View Profile
+                            </button>
+                            <button class="btn-secondary" onclick="editAlumni(2)">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="btn-success" onclick="contactAlumni(2)">
+                                <i class="fas fa-envelope"></i> Contact
+                            </button>
+                            <button class="btn-danger" onclick="deleteAlumni(2)">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Alumni Management Actions -->
+                <div class="management-actions">
+                    <div class="bulk-actions">
+                        <h4><i class="fas fa-tasks"></i> Bulk Actions</h4>
+                        <div class="bulk-action-buttons">
+                            <button class="btn-info" onclick="sendBulkInvitations()">
+                                <i class="fas fa-paper-plane"></i> Send Event Invitations
+                            </button>
+                            <button class="btn-warning" onclick="sendNewsletters()">
+                                <i class="fas fa-newspaper"></i> Send Newsletter
+                            </button>
+                            <button class="btn-success" onclick="generateAlumniReport()">
+                                <i class="fas fa-chart-bar"></i> Generate Report
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Events Management Section -->
+            <div id="events-section" class="admin-section" style="display: none;">
+                <div class="section-header">
+                    <h1><i class="fas fa-calendar-alt"></i> Events Management</h1>
+                    <div class="header-actions">
+                        <button class="btn-info" onclick="showCalendarView()">
+                            <i class="fas fa-calendar"></i> Calendar View
+                        </button>
+                        <button class="btn-secondary" onclick="exportEventsData()">
+                            <i class="fas fa-download"></i> Export Events
+                        </button>
+                        <button class="btn-primary" onclick="showAddEventModal()">
+                            <i class="fas fa-plus"></i>
+                            Add New Event
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Events Statistics -->
+                <div class="management-stats">
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="stat-data">
+                            <h3 id="totalEventsCount">24</h3>
+                            <p>Total Events</p>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-data">
+                            <h3 id="upcomingEventsCount">8</h3>
+                            <p>Upcoming Events</p>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <div class="stat-data">
+                            <h3 id="ongoingEventsCount">3</h3>
+                            <p>Ongoing Events</p>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-data">
+                            <h3 id="totalParticipantsCount">1,250</h3>
+                            <p>Total Participants</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-filters">
+                    <div class="form-group">
+                        <label>Status:</label>
+                        <select id="eventStatusFilter" onchange="filterEvents()">
+                            <option value="all">All Events</option>
+                            <option value="upcoming">Upcoming</option>
+                            <option value="ongoing">Ongoing</option>
+                            <option value="completed">Completed</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Category:</label>
+                        <select id="eventCategoryFilter" onchange="filterEvents()">
+                            <option value="all">All Categories</option>
+                            <option value="academic">Academic</option>
+                            <option value="cultural">Cultural</option>
+                            <option value="technical">Technical</option>
+                            <option value="sports">Sports</option>
+                            <option value="workshop">Workshop</option>
+                            <option value="seminar">Seminar</option>
+                            <option value="conference">Conference</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Date Range:</label>
+                        <input type="date" id="eventDateFrom" onchange="filterEvents()">
+                        <span> to </span>
+                        <input type="date" id="eventDateTo" onchange="filterEvents()">
+                    </div>
+                    <div class="form-group">
+                        <label>Search:</label>
+                        <input type="text" id="eventSearch" placeholder="Search events by title, organizer, venue..." oninput="filterEvents()">
+                    </div>
+                </div>
+
+                <div id="eventsList" class="content-list">
+                    <!-- Events will be loaded here dynamically -->
+                    <div class="content-card event-card upcoming">
+                        <div class="event-header">
+                            <div class="event-date-badge">
+                                <span class="day">25</span>
+                                <span class="month">JUL</span>
+                                <span class="year">2025</span>
+                            </div>
+                            <div class="event-basic-info">
+                                <h4>Technical Workshop on AI & Machine Learning</h4>
+                                <p class="event-meta">
+                                    <i class="fas fa-tag"></i> Technical Workshop • 
+                                    <i class="fas fa-map-marker-alt"></i> Main Auditorium • 
+                                    <i class="fas fa-clock"></i> 10:00 AM - 4:00 PM
+                                </p>
+                            </div>
+                            <div class="event-status upcoming">
+                                <span>Upcoming</span>
+                            </div>
+                        </div>
+                        <div class="event-details">
+                            <div class="event-description">
+                                <p>A comprehensive workshop covering the fundamentals of Artificial Intelligence and Machine Learning. Industry experts will share insights and hands-on experience.</p>
+                            </div>
+                            <div class="event-info-grid">
+                                <div class="event-info-item">
+                                    <i class="fas fa-user"></i>
+                                    <span><strong>Organizer:</strong> Dr. Rajesh Kumar</span>
+                                </div>
+                                <div class="event-info-item">
+                                    <i class="fas fa-users"></i>
+                                    <span><strong>Capacity:</strong> 150 participants</span>
+                                </div>
+                                <div class="event-info-item">
+                                    <i class="fas fa-user-check"></i>
+                                    <span><strong>Registered:</strong> 87 participants</span>
+                                </div>
+                                <div class="event-info-item">
+                                    <i class="fas fa-phone"></i>
+                                    <span><strong>Contact:</strong> events@soet.ac.in</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn-info" onclick="viewEventDetails(1)">
+                                <i class="fas fa-eye"></i> View Details
+                            </button>
+                            <button class="btn-success" onclick="manageRegistrations(1)">
+                                <i class="fas fa-users"></i> Registrations
+                            </button>
+                            <button class="btn-warning" onclick="sendEventNotifications(1)">
+                                <i class="fas fa-bell"></i> Notify
+                            </button>
+                            <button class="btn-secondary" onclick="editEvent(1)">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="btn-danger" onclick="cancelEvent(1)">
+                                <i class="fas fa-times"></i> Cancel
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="content-card event-card ongoing">
+                        <div class="event-header">
+                            <div class="event-date-badge">
+                                <span class="day">21</span>
+                                <span class="month">JUL</span>
+                                <span class="year">2025</span>
+                            </div>
+                            <div class="event-basic-info">
+                                <h4>Inter-College Sports Tournament</h4>
+                                <p class="event-meta">
+                                    <i class="fas fa-tag"></i> Sports • 
+                                    <i class="fas fa-map-marker-alt"></i> Sports Complex • 
+                                    <i class="fas fa-clock"></i> 9:00 AM - 6:00 PM
+                                </p>
+                            </div>
+                            <div class="event-status ongoing">
+                                <span>Ongoing</span>
+                            </div>
+                        </div>
+                        <div class="event-details">
+                            <div class="event-description">
+                                <p>Annual inter-college sports tournament featuring cricket, football, basketball, and athletics. Students from 12 colleges participating.</p>
+                            </div>
+                            <div class="event-info-grid">
+                                <div class="event-info-item">
+                                    <i class="fas fa-user"></i>
+                                    <span><strong>Organizer:</strong> Sports Committee</span>
+                                </div>
+                                <div class="event-info-item">
+                                    <i class="fas fa-users"></i>
+                                    <span><strong>Participants:</strong> 300+ athletes</span>
+                                </div>
+                                <div class="event-info-item">
+                                    <i class="fas fa-trophy"></i>
+                                    <span><strong>Events:</strong> 15 sports categories</span>
+                                </div>
+                                <div class="event-info-item">
+                                    <i class="fas fa-phone"></i>
+                                    <span><strong>Contact:</strong> sports@soet.ac.in</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn-info" onclick="viewEventDetails(2)">
+                                <i class="fas fa-eye"></i> View Details
+                            </button>
+                            <button class="btn-success" onclick="liveEventManagement(2)">
+                                <i class="fas fa-broadcast-tower"></i> Live Management
+                            </button>
+                            <button class="btn-warning" onclick="updateEventStatus(2)">
+                                <i class="fas fa-sync"></i> Update Status
+                            </button>
+                            <button class="btn-secondary" onclick="editEvent(2)">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="content-card event-card completed">
+                        <div class="event-header">
+                            <div class="event-date-badge">
+                                <span class="day">15</span>
+                                <span class="month">JUL</span>
+                                <span class="year">2025</span>
+                            </div>
+                            <div class="event-basic-info">
+                                <h4>Alumni Meet 2025</h4>
+                                <p class="event-meta">
+                                    <i class="fas fa-tag"></i> Alumni Event • 
+                                    <i class="fas fa-map-marker-alt"></i> Conference Hall • 
+                                    <i class="fas fa-clock"></i> 2:00 PM - 8:00 PM
+                                </p>
+                            </div>
+                            <div class="event-status completed">
+                                <span>Completed</span>
+                            </div>
+                        </div>
+                        <div class="event-details">
+                            <div class="event-description">
+                                <p>Annual alumni gathering with networking sessions, keynote speeches, and celebration dinner. Great turnout with 150+ alumni.</p>
+                            </div>
+                            <div class="event-info-grid">
+                                <div class="event-info-item">
+                                    <i class="fas fa-user"></i>
+                                    <span><strong>Organizer:</strong> Alumni Relations</span>
+                                </div>
+                                <div class="event-info-item">
+                                    <i class="fas fa-users"></i>
+                                    <span><strong>Attended:</strong> 156 alumni</span>
+                                </div>
+                                <div class="event-info-item">
+                                    <i class="fas fa-star"></i>
+                                    <span><strong>Rating:</strong> 4.8/5 (45 reviews)</span>
+                                </div>
+                                <div class="event-info-item">
+                                    <i class="fas fa-camera"></i>
+                                    <span><strong>Photos:</strong> 89 uploaded</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn-info" onclick="viewEventReport(3)">
+                                <i class="fas fa-chart-bar"></i> View Report
+                            </button>
+                            <button class="btn-success" onclick="viewEventPhotos(3)">
+                                <i class="fas fa-images"></i> Photos
+                            </button>
+                            <button class="btn-warning" onclick="sendFeedbackRequest(3)">
+                                <i class="fas fa-comment"></i> Feedback
+                            </button>
+                            <button class="btn-secondary" onclick="archiveEvent(3)">
+                                <i class="fas fa-archive"></i> Archive
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event Management Actions -->
+                <div class="management-actions">
+                    <div class="bulk-actions">
+                        <h4><i class="fas fa-tasks"></i> Event Management Tools</h4>
+                        <div class="bulk-action-buttons">
+                            <button class="btn-info" onclick="generateEventCalendar()">
+                                <i class="fas fa-calendar-alt"></i> Generate Calendar
+                            </button>
+                            <button class="btn-warning" onclick="bulkEventNotifications()">
+                                <i class="fas fa-bell"></i> Bulk Notifications
+                            </button>
+                            <button class="btn-success" onclick="generateEventsReport()">
+                                <i class="fas fa-file-alt"></i> Generate Report
+                            </button>
+                            <button class="btn-secondary" onclick="scheduleRecurringEvents()">
+                                <i class="fas fa-redo"></i> Schedule Recurring
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Announcements Management Section -->
+            <div id="announcements-section" class="admin-section" style="display: none;">
+                <div class="section-header">
+                    <h1><i class="fas fa-bullhorn"></i> Announcements Management</h1>
+                    <button class="btn-primary" onclick="showAddAnnouncementModal()">
+                        <i class="fas fa-plus"></i>
+                        Add New Announcement
+                    </button>
+                </div>
+                
+                <div class="content-filters">
+                    <div class="form-group">
+                        <label>Priority:</label>
+                        <select id="announcementPriorityFilter" onchange="filterAnnouncements()">
+                            <option value="all">All Priorities</option>
+                            <option value="high">High Priority</option>
+                            <option value="medium">Medium Priority</option>
+                            <option value="low">Low Priority</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Status:</label>
+                        <select id="announcementStatusFilter" onchange="filterAnnouncements()">
+                            <option value="all">All Status</option>
+                            <option value="active">Active</option>
+                            <option value="expired">Expired</option>
+                            <option value="draft">Draft</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Search:</label>
+                        <input type="text" id="announcementSearch" placeholder="Search announcements..." oninput="filterAnnouncements()">
+                    </div>
+                </div>
+
+                <div id="announcementsList" class="content-list">
+                    <!-- Announcements will be loaded here dynamically -->
+                    <div class="content-card">
+                        <h4>Admission Notice 2024-25</h4>
+                        <p><strong>Priority:</strong> High</p>
+                        <p><strong>Status:</strong> Active</p>
+                        <p><strong>Date:</strong> January 10, 2024</p>
+                        <div class="card-actions">
+                            <button class="btn-secondary" onclick="editAnnouncement(1)">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="btn-danger" onclick="deleteAnnouncement(1)">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Media Library Section -->
+            <div id="media-section" class="admin-section" style="display: none;">
+                <div class="section-header">
+                    <h1><i class="fas fa-images"></i> Media Library</h1>
+                    <button class="btn-primary" onclick="showUploadMediaModal()">
+                        <i class="fas fa-upload"></i>
+                        Upload Media
+                    </button>
+                </div>
+                
+                <div class="media-library">
+                    <div class="media-item">
+                        <img src="IMG/College Pics/College/IMG-20241226-WA0007.jpg" alt="College Building">
+                        <div class="media-info">
+                            <h4>College Building</h4>
+                            <p>Main campus building view</p>
+                        </div>
+                    </div>
+                    <div class="media-item">
+                        <img src="IMG/Academics Activities/Code_d_Code Coding Society Poster - Made with PosterMyWall.jpg" alt="Coding Society">
+                        <div class="media-info">
+                            <h4>Coding Society Poster</h4>
+                            <p>Code d Code event poster</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals Container -->
+    <div id="modalsContainer">
+        <!-- Add Staff Modal -->
+        <div id="addStaffModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2><i class="fas fa-user-plus"></i> Add New Staff Member</h2>
+                    <span class="close" onclick="closeModal('addStaffModal')">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <form id="addStaffForm" onsubmit="submitStaffForm(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="staffName">Full Name *</label>
+                                <input type="text" id="staffName" name="staffName" required placeholder="Enter full name">
+                            </div>
+                            <div class="form-group">
+                                <label for="staffDesignation">Designation *</label>
+                                <select id="staffDesignation" name="staffDesignation" required>
+                                    <option value="">Select Designation</option>
+                                    <option value="Director">Director</option>
+                                    <option value="Professor">Professor</option>
+                                    <option value="Associate Professor">Associate Professor</option>
+                                    <option value="Assistant Professor">Assistant Professor</option>
+                                    <option value="Lecturer">Lecturer</option>
+                                    <option value="Lab Assistant">Lab Assistant</option>
+                                    <option value="Administrative Officer">Administrative Officer</option>
+                                    <option value="Librarian">Librarian</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="staffDepartment">Department *</label>
+                                <select id="staffDepartment" name="staffDepartment" required>
+                                    <option value="">Select Department</option>
+                                    <option value="director">Director Office</option>
+                                    <option value="cs">Computer Science</option>
+                                    <option value="ece">Electronics & Communication</option>
+                                    <option value="me">Mechanical Engineering</option>
+                                    <option value="ee">Electrical Engineering</option>
+                                    <option value="ce">Civil Engineering</option>
+                                    <option value="admin">Administration</option>
+                                    <option value="library">Library</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="staffEmail">Email Address *</label>
+                                <input type="email" id="staffEmail" name="staffEmail" required placeholder="staff@soet.ac.in">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="staffPhone">Phone Number *</label>
+                                <input type="tel" id="staffPhone" name="staffPhone" required placeholder="+91 9876543210">
+                            </div>
+                            <div class="form-group">
+                                <label for="staffExperience">Experience (Years)</label>
+                                <input type="number" id="staffExperience" name="staffExperience" min="0" placeholder="Years of experience">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="staffQualification">Qualification</label>
+                            <input type="text" id="staffQualification" name="staffQualification" placeholder="Ph.D. in Computer Science">
+                        </div>
+                        <div class="form-group">
+                            <label for="staffSpecialization">Specialization</label>
+                            <textarea id="staffSpecialization" name="staffSpecialization" placeholder="Area of expertise and specialization" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="staffPhoto">Profile Photo</label>
+                            <input type="file" id="staffPhoto" name="staffPhoto" accept="image/*" onchange="previewImage(this, 'staffPhotoPreview')">
+                            <div id="staffPhotoPreview" class="file-preview" style="display: none;">
+                                <img id="staffPhotoImg" src="" alt="Preview" style="max-width: 150px; max-height: 150px;">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn-secondary" onclick="closeModal('addStaffModal')">Cancel</button>
+                            <button type="submit" class="btn-primary">
+                                <i class="fas fa-save"></i> Add Staff Member
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Alumni Modal -->
+        <div id="addAlumniModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2><i class="fas fa-user-graduate"></i> Add New Alumni</h2>
+                    <span class="close" onclick="closeModal('addAlumniModal')">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <form id="addAlumniForm" onsubmit="submitAlumniForm(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="alumniName">Full Name *</label>
+                                <input type="text" id="alumniName" name="alumniName" required placeholder="Enter full name">
+                            </div>
+                            <div class="form-group">
+                                <label for="alumniBatchYear">Graduation Year *</label>
+                                <select id="alumniBatchYear" name="alumniBatchYear" required>
+                                    <option value="">Select Year</option>
+                                    <option value="2024">2024</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2022">2022</option>
+                                    <option value="2021">2021</option>
+                                    <option value="2020">2020</option>
+                                    <option value="2019">2019</option>
+                                    <option value="2018">2018</option>
+                                    <option value="2017">2017</option>
+                                    <option value="2016">2016</option>
+                                    <option value="2015">2015</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="alumniDepartment">Department *</label>
+                                <select id="alumniDepartment" name="alumniDepartment" required>
+                                    <option value="">Select Department</option>
+                                    <option value="cs">Computer Science</option>
+                                    <option value="ece">Electronics & Communication</option>
+                                    <option value="me">Mechanical Engineering</option>
+                                    <option value="ee">Electrical Engineering</option>
+                                    <option value="ce">Civil Engineering</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="alumniEmail">Email Address *</label>
+                                <input type="email" id="alumniEmail" name="alumniEmail" required placeholder="alumni@email.com">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="alumniPhone">Phone Number</label>
+                                <input type="tel" id="alumniPhone" name="alumniPhone" placeholder="+91 9876543210">
+                            </div>
+                            <div class="form-group">
+                                <label for="alumniCurrentPosition">Current Position</label>
+                                <input type="text" id="alumniCurrentPosition" name="alumniCurrentPosition" placeholder="Software Engineer">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="alumniCompany">Current Company</label>
+                                <input type="text" id="alumniCompany" name="alumniCompany" placeholder="Company Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="alumniLocation">Location</label>
+                                <input type="text" id="alumniLocation" name="alumniLocation" placeholder="City, State">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="alumniLinkedIn">LinkedIn Profile</label>
+                            <input type="url" id="alumniLinkedIn" name="alumniLinkedIn" placeholder="https://linkedin.com/in/profile">
+                        </div>
+                        <div class="form-group">
+                            <label for="alumniAchievements">Achievements</label>
+                            <textarea id="alumniAchievements" name="alumniAchievements" placeholder="Notable achievements and recognitions" rows="3"></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn-secondary" onclick="closeModal('addAlumniModal')">Cancel</button>
+                            <button type="submit" class="btn-primary">
+                                <i class="fas fa-save"></i> Add Alumni
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Event Modal -->
+        <div id="addEventModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2><i class="fas fa-calendar-plus"></i> Add New Event</h2>
+                    <span class="close" onclick="closeModal('addEventModal')">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <form id="addEventForm" onsubmit="submitEventForm(event)">
+                        <div class="form-group">
+                            <label for="eventTitle">Event Title *</label>
+                            <input type="text" id="eventTitle" name="eventTitle" required placeholder="Enter event title">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="eventCategory">Category *</label>
+                                <select id="eventCategory" name="eventCategory" required>
+                                    <option value="">Select Category</option>
+                                    <option value="academic">Academic</option>
+                                    <option value="cultural">Cultural</option>
+                                    <option value="technical">Technical</option>
+                                    <option value="sports">Sports</option>
+                                    <option value="workshop">Workshop</option>
+                                    <option value="seminar">Seminar</option>
+                                    <option value="conference">Conference</option>
+                                    <option value="competition">Competition</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="eventVenue">Venue *</label>
+                                <input type="text" id="eventVenue" name="eventVenue" required placeholder="Event venue">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="eventDate">Event Date *</label>
+                                <input type="date" id="eventDate" name="eventDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="eventTime">Event Time *</label>
+                                <input type="time" id="eventTime" name="eventTime" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="eventDuration">Duration (Hours)</label>
+                                <input type="number" id="eventDuration" name="eventDuration" min="0.5" step="0.5" placeholder="Duration in hours">
+                            </div>
+                            <div class="form-group">
+                                <label for="eventCapacity">Max Participants</label>
+                                <input type="number" id="eventCapacity" name="eventCapacity" min="1" placeholder="Maximum participants">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventDescription">Event Description *</label>
+                            <textarea id="eventDescription" name="eventDescription" required placeholder="Detailed description of the event" rows="4"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventOrganizer">Organizer</label>
+                            <input type="text" id="eventOrganizer" name="eventOrganizer" placeholder="Event organizer name">
+                        </div>
+                        <div class="form-group">
+                            <label for="eventContact">Contact Information</label>
+                            <input type="text" id="eventContact" name="eventContact" placeholder="Contact email or phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="eventPoster">Event Poster</label>
+                            <input type="file" id="eventPoster" name="eventPoster" accept="image/*" onchange="previewImage(this, 'eventPosterPreview')">
+                            <div id="eventPosterPreview" class="file-preview" style="display: none;">
+                                <img id="eventPosterImg" src="" alt="Preview" style="max-width: 200px; max-height: 200px;">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn-secondary" onclick="closeModal('addEventModal')">Cancel</button>
+                            <button type="submit" class="btn-primary">
+                                <i class="fas fa-save"></i> Add Event
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Announcement Modal -->
+        <div id="addAnnouncementModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2><i class="fas fa-bullhorn"></i> Add New Announcement</h2>
+                    <span class="close" onclick="closeModal('addAnnouncementModal')">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <form id="addAnnouncementForm" onsubmit="submitAnnouncementForm(event)">
+                        <div class="form-group">
+                            <label for="announcementTitle">Announcement Title *</label>
+                            <input type="text" id="announcementTitle" name="announcementTitle" required placeholder="Enter announcement title">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="announcementPriority">Priority *</label>
+                                <select id="announcementPriority" name="announcementPriority" required>
+                                    <option value="">Select Priority</option>
+                                    <option value="high">High Priority</option>
+                                    <option value="medium">Medium Priority</option>
+                                    <option value="low">Low Priority</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="announcementCategory">Category</label>
+                                <select id="announcementCategory" name="announcementCategory">
+                                    <option value="">Select Category</option>
+                                    <option value="academic">Academic</option>
+                                    <option value="administrative">Administrative</option>
+                                    <option value="admission">Admission</option>
+                                    <option value="examination">Examination</option>
+                                    <option value="events">Events</option>
+                                    <option value="general">General</option>
+                                    <option value="placement">Placement</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="announcementStartDate">Start Date *</label>
+                                <input type="date" id="announcementStartDate" name="announcementStartDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="announcementEndDate">End Date</label>
+                                <input type="date" id="announcementEndDate" name="announcementEndDate">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="announcementContent">Announcement Content *</label>
+                            <textarea id="announcementContent" name="announcementContent" required placeholder="Enter the full announcement content" rows="6"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="announcementTargetAudience">Target Audience</label>
+                            <select id="announcementTargetAudience" name="announcementTargetAudience" multiple>
+                                <option value="students">Students</option>
+                                <option value="faculty">Faculty</option>
+                                <option value="staff">Staff</option>
+                                <option value="parents">Parents</option>
+                                <option value="alumni">Alumni</option>
+                                <option value="public">General Public</option>
+                            </select>
+                            <small>Hold Ctrl/Cmd to select multiple options</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="announcementAttachment">Attachment (Optional)</label>
+                            <input type="file" id="announcementAttachment" name="announcementAttachment" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn-secondary" onclick="closeModal('addAnnouncementModal')">Cancel</button>
+                            <button type="submit" class="btn-primary">
+                                <i class="fas fa-save"></i> Add Announcement
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upload Media Modal -->
+        <div id="uploadMediaModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2><i class="fas fa-upload"></i> Upload Media</h2>
+                    <span class="close" onclick="closeModal('uploadMediaModal')">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <form id="uploadMediaForm" onsubmit="submitMediaForm(event)">
+                        <div class="form-group">
+                            <label for="mediaTitle">Media Title *</label>
+                            <input type="text" id="mediaTitle" name="mediaTitle" required placeholder="Enter media title">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="mediaCategory">Category *</label>
+                                <select id="mediaCategory" name="mediaCategory" required>
+                                    <option value="">Select Category</option>
+                                    <option value="college-pics">College Pictures</option>
+                                    <option value="academics">Academic Activities</option>
+                                    <option value="cultural">Cultural Activities</option>
+                                    <option value="social">Social Activities</option>
+                                    <option value="sports">Sports</option>
+                                    <option value="events">Events</option>
+                                    <option value="infrastructure">Infrastructure</option>
+                                    <option value="labs">Laboratories</option>
+                                    <option value="library">Library</option>
+                                    <option value="documents">Documents</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="mediaType">Media Type</label>
+                                <select id="mediaType" name="mediaType">
+                                    <option value="image">Image</option>
+                                    <option value="video">Video</option>
+                                    <option value="document">Document</option>
+                                    <option value="audio">Audio</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="mediaDescription">Description</label>
+                            <textarea id="mediaDescription" name="mediaDescription" placeholder="Brief description of the media" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="mediaFile">Select File *</label>
+                            <input type="file" id="mediaFile" name="mediaFile" required accept="image/*,video/*,.pdf,.doc,.docx,.ppt,.pptx" onchange="previewMedia(this)">
+                            <small>Supported formats: Images (JPG, PNG, GIF), Videos (MP4, AVI), Documents (PDF, DOC, PPT)</small>
+                        </div>
+                        <div id="mediaPreview" class="file-preview" style="display: none;">
+                            <div id="mediaPreviewContent"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="mediaTags">Tags (comma-separated)</label>
+                            <input type="text" id="mediaTags" name="mediaTags" placeholder="campus, students, technology, workshop">
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="mediaFeatured" name="mediaFeatured">
+                                Mark as Featured Content
+                            </label>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn-secondary" onclick="closeModal('uploadMediaModal')">Cancel</button>
+                            <button type="submit" class="btn-primary">
+                                <i class="fas fa-upload"></i> Upload Media
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alert Container -->
+    <div id="alertContainer"></div>
+
+    <!-- Scripts -->
+    <script src="admin-dashboard.js"></script>
+    
+    <script>
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStats();
+            loadContent();
+        });
+
+        // Show different sections
+        function showSection(sectionName) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.admin-section');
+            sections.forEach(section => {
+                if (section.id.includes('-section')) {
+                    section.style.display = 'none';
+                }
+            });
+
+            // Show selected section
+            const targetSection = document.getElementById(sectionName + '-section');
+            if (targetSection) {
+                targetSection.style.display = 'block';
+            }
+
+            // Update navigation active state
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => item.classList.remove('active'));
+            
+            const activeItem = document.querySelector(`[onclick="showSection('${sectionName}')"]`);
+            if (activeItem) {
+                activeItem.classList.add('active');
+            }
+        }
+
+        // Update statistics
+        function updateStats() {
+            // These would typically come from a database/API
+            document.getElementById('staffCount').textContent = '25';
+            document.getElementById('alumniCount').textContent = '150';
+            document.getElementById('eventCount').textContent = '8';
+            document.getElementById('announcementCount').textContent = '12';
+        }
+
+        // Load content (placeholder functions)
+        function loadContent() {
+            // This would load actual data from backend
+            console.log('Loading dashboard content...');
+        }
+
+        // Modal functions
+        function showAddStaffModal() {
+            showModal('addStaffModal');
+        }
+
+        function showAddAlumniModal() {
+            showModal('addAlumniModal');
+        }
+
+        function showAddEventModal() {
+            showModal('addEventModal');
+        }
+
+        function showAddAnnouncementModal() {
+            showModal('addAnnouncementModal');
+        }
+
+        function showUploadMediaModal() {
+            showModal('uploadMediaModal');
+        }
+
+        // Generic modal functions
+        function showModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = 'flex';
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+                
+                // Reset form if it exists
+                const form = modal.querySelector('form');
+                if (form) {
+                    form.reset();
+                    // Clear any file previews
+                    const previews = modal.querySelectorAll('.file-preview');
+                    previews.forEach(preview => {
+                        preview.style.display = 'none';
+                    });
+                }
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = 'none';
+                modal.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+                event.target.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // File preview functions
+        function previewImage(input, previewId) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                const preview = document.getElementById(previewId);
+                const img = preview.querySelector('img');
+                
+                reader.onload = function(e) {
+                    img.src = e.target.result;
+                    preview.style.display = 'block';
+                }
+                
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function previewMedia(input) {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                const preview = document.getElementById('mediaPreview');
+                const previewContent = document.getElementById('mediaPreviewContent');
+                
+                preview.style.display = 'block';
+                
+                if (file.type.startsWith('image/')) {
+                    previewContent.innerHTML = `<img src="${URL.createObjectURL(file)}" style="max-width: 200px; max-height: 200px; border-radius: 8px;">`;
+                } else if (file.type.startsWith('video/')) {
+                    previewContent.innerHTML = `<video controls style="max-width: 200px; max-height: 200px; border-radius: 8px;">
+                        <source src="${URL.createObjectURL(file)}" type="${file.type}">
+                    </video>`;
+                } else {
+                    previewContent.innerHTML = `<div style="padding: 20px; background: #f8f9fa; border-radius: 8px; text-align: center;">
+                        <i class="fas fa-file" style="font-size: 2rem; color: #666; margin-bottom: 10px;"></i>
+                        <p style="margin: 0; color: #666;">${file.name}</p>
+                        <small style="color: #999;">${(file.size / 1024 / 1024).toFixed(2)} MB</small>
+                    </div>`;
+                }
+            }
+        }
+
+        // Form submission functions
+        function submitStaffForm(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            
+            // Create staff object
+            const staffData = {
+                id: Date.now(),
+                name: formData.get('staffName'),
+                designation: formData.get('staffDesignation'),
+                department: formData.get('staffDepartment'),
+                email: formData.get('staffEmail'),
+                phone: formData.get('staffPhone'),
+                experience: formData.get('staffExperience'),
+                qualification: formData.get('staffQualification'),
+                specialization: formData.get('staffSpecialization'),
+                photo: '' // Would handle file upload in real implementation
+            };
+            
+            // In a real application, this would be sent to a server
+            console.log('Adding staff member:', staffData);
+            
+            // Simulate success
+            showNotification('Staff member added successfully!', 'success');
+            closeModal('addStaffModal');
+            
+            // Update staff count
+            const staffCount = document.getElementById('staffCount');
+            if (staffCount) {
+                staffCount.textContent = parseInt(staffCount.textContent) + 1;
+            }
+        }
+
+        function submitAlumniForm(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            
+            const alumniData = {
+                id: Date.now(),
+                name: formData.get('alumniName'),
+                batchYear: formData.get('alumniBatchYear'),
+                department: formData.get('alumniDepartment'),
+                email: formData.get('alumniEmail'),
+                phone: formData.get('alumniPhone'),
+                currentPosition: formData.get('alumniCurrentPosition'),
+                company: formData.get('alumniCompany'),
+                location: formData.get('alumniLocation'),
+                linkedIn: formData.get('alumniLinkedIn'),
+                achievements: formData.get('alumniAchievements')
+            };
+            
+            console.log('Adding alumni:', alumniData);
+            showNotification('Alumni record added successfully!', 'success');
+            closeModal('addAlumniModal');
+            
+            // Update alumni count
+            const alumniCount = document.getElementById('alumniCount');
+            if (alumniCount) {
+                alumniCount.textContent = parseInt(alumniCount.textContent) + 1;
+            }
+        }
+
+        function submitEventForm(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            
+            const eventData = {
+                id: Date.now(),
+                title: formData.get('eventTitle'),
+                category: formData.get('eventCategory'),
+                venue: formData.get('eventVenue'),
+                date: formData.get('eventDate'),
+                time: formData.get('eventTime'),
+                duration: formData.get('eventDuration'),
+                capacity: formData.get('eventCapacity'),
+                description: formData.get('eventDescription'),
+                organizer: formData.get('eventOrganizer'),
+                contact: formData.get('eventContact')
+            };
+            
+            console.log('Adding event:', eventData);
+            showNotification('Event created successfully!', 'success');
+            closeModal('addEventModal');
+            
+            // Update event count
+            const eventCount = document.getElementById('eventCount');
+            if (eventCount) {
+                eventCount.textContent = parseInt(eventCount.textContent) + 1;
+            }
+        }
+
+        function submitAnnouncementForm(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            
+            const announcementData = {
+                id: Date.now(),
+                title: formData.get('announcementTitle'),
+                priority: formData.get('announcementPriority'),
+                category: formData.get('announcementCategory'),
+                startDate: formData.get('announcementStartDate'),
+                endDate: formData.get('announcementEndDate'),
+                content: formData.get('announcementContent'),
+                targetAudience: formData.getAll('announcementTargetAudience')
+            };
+            
+            console.log('Adding announcement:', announcementData);
+            showNotification('Announcement published successfully!', 'success');
+            closeModal('addAnnouncementModal');
+            
+            // Update announcement count
+            const announcementCount = document.getElementById('announcementCount');
+            if (announcementCount) {
+                announcementCount.textContent = parseInt(announcementCount.textContent) + 1;
+            }
+        }
+
+        function submitMediaForm(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            
+            const mediaData = {
+                id: Date.now(),
+                title: formData.get('mediaTitle'),
+                category: formData.get('mediaCategory'),
+                type: formData.get('mediaType'),
+                description: formData.get('mediaDescription'),
+                tags: formData.get('mediaTags'),
+                featured: formData.get('mediaFeatured') === 'on'
+            };
+            
+            console.log('Uploading media:', mediaData);
+            showNotification('Media uploaded successfully!', 'success');
+            closeModal('uploadMediaModal');
+        }
+
+        // Enhanced notification function
+        function showNotification(message, type = 'info', duration = 3000) {
+            // Remove existing notifications
+            const existingNotifications = document.querySelectorAll('.notification');
+            existingNotifications.forEach(notification => notification.remove());
+            
+            // Create new notification
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                ${message}
+            `;
+            
+            // Add to page
+            document.body.appendChild(notification);
+            
+            // Auto remove after specified duration
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.style.opacity = '0';
+                    notification.style.transform = 'translateX(100%)';
+                    setTimeout(() => {
+                        if (notification.parentNode) {
+                            notification.parentNode.removeChild(notification);
+                        }
+                    }, 300);
+                }
+            }, duration);
+        }
+
+        // Filter functions (placeholders)
+        function filterStaff() {
+            console.log('Filtering staff...');
+        }
+
+        function filterAlumni() {
+            console.log('Filtering alumni...');
+        }
+
+        function filterEvents() {
+            console.log('Filtering events...');
+        }
+
+        function filterAnnouncements() {
+            console.log('Filtering announcements...');
+        }
+
+        // Edit/Delete functions (placeholders)
+        function editStaff(id) {
+            alert(`Edit Staff ID: ${id}`);
+        }
+
+        function deleteStaff(id) {
+            if (confirm('Are you sure you want to delete this staff member?')) {
+                alert(`Delete Staff ID: ${id}`);
+            }
+        }
+
+        function editAlumni(id) {
+            alert(`Edit Alumni ID: ${id}`);
+        }
+
+        function deleteAlumni(id) {
+            if (confirm('Are you sure you want to delete this alumni record?')) {
+                alert(`Delete Alumni ID: ${id}`);
+            }
+        }
+
+        function editEvent(id) {
+            alert(`Edit Event ID: ${id}`);
+        }
+
+        function deleteEvent(id) {
+            if (confirm('Are you sure you want to delete this event?')) {
+                alert(`Delete Event ID: ${id}`);
+            }
+        }
+
+        function editAnnouncement(id) {
+            alert(`Edit Announcement ID: ${id}`);
+        }
+
+        function deleteAnnouncement(id) {
+            if (confirm('Are you sure you want to delete this announcement?')) {
+                alert(`Delete Announcement ID: ${id}`);
+            }
+        }
+
+        // Test logout function immediately when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Admin dashboard loaded');
+            
+            // Test if logout button exists
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                console.log('Logout button found!');
+                
+                // Add extra click handler as backup
+                logoutBtn.addEventListener('click', function(e) {
+                    console.log('Logout button clicked via event listener');
+                    performLogout();
+                });
+            } else {
+                console.log('Logout button NOT found!');
+            }
+        });
+    </script>
+</body>
+</html>
